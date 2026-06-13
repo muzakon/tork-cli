@@ -7,10 +7,10 @@ use clap::{Args, Parser, Subcommand};
 pub use tork_orm_cli::cli::{GlobalArgs, MigrateCommand};
 
 /// The default git source for a new project's framework dependency (`tork`).
-pub const DEFAULT_FRAMEWORK_GIT: &str = "https://github.com/muzakon/tork-framework.git";
+pub const DEFAULT_FRAMEWORK_GIT: &str = "https://github.com/tork-rs/tork-framework.git";
 
 /// The default git source for a new project's ORM dependency (`tork-orm`).
-pub const DEFAULT_ORM_GIT: &str = "https://github.com/muzakon/tork-orm.git";
+pub const DEFAULT_ORM_GIT: &str = "https://github.com/tork-rs/tork-orm.git";
 
 /// Colored clap help (green headers/usage, cyan literals).
 fn help_styles() -> Styles {

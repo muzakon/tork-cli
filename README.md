@@ -1,6 +1,6 @@
 # tork CLI
 
-The developer CLI for the [Tork](https://github.com/muzakon/tork) web framework:
+The developer CLI for the [Tork](https://github.com/tork-rs/tork) web framework:
 scaffold a project, run database migrations, and drive the build/dev loop — all behind
 one colored interface.
 
@@ -15,11 +15,11 @@ tork dev        Run the project, restarting on file changes
 
 ## Install
 
-The CLI is part of the [tork superproject](https://github.com/muzakon/tork) and is
+The CLI is part of the [tork superproject](https://github.com/tork-rs/tork) and is
 built from there (it shares crates with the ORM by path):
 
 ```sh
-git clone --recurse-submodules https://github.com/muzakon/tork.git
+git clone --recurse-submodules https://github.com/tork-rs/tork.git
 cd tork
 cargo install --path cli/crates/tork-cli      # installs the `tork` binary
 ```
@@ -83,7 +83,7 @@ tork migrate redo                 # revert the most recent and re-apply
 Migrations are plain `.sql` files with `-- revision:` / `-- migrate:up` / `-- migrate:down`
 headers, so the binary needs no compilation — just a `migrations/` directory and a
 database URL. The matching schema is usually generated from your models; see the
-[ORM migration guide](https://github.com/muzakon/tork-orm/blob/main/docs/08-migrations-and-cli.md).
+[ORM migration guide](https://github.com/tork-rs/tork-orm/blob/main/docs/08-migrations-and-cli.md).
 
 Global migration flags: `--dir <path>` (migrations directory), `--table <name>`
 (bookkeeping table, default `_tork_migrations`), `-y/--yes` (skip confirmation),

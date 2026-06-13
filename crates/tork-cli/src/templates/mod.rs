@@ -185,7 +185,7 @@ const ENV_EXAMPLE: &str = "# Copy to .env and adjust.\nAPP_NAME=@NAME@\nAPP_HOST
 
 const README: &str = r#"# @NAME@
 
-A web service built on the [Tork](https://github.com/muzakon/tork-framework) framework.
+A web service built on the [Tork](https://github.com/tork-rs/tork-framework) framework.
 
 ## Develop
 

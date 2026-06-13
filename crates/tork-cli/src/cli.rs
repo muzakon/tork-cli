@@ -80,8 +80,13 @@ pub enum Command {
 /// `tork new` arguments.
 #[derive(Args)]
 pub struct NewArgs {
-    /// The project name (also the directory created for it).
-    pub name: String,
+    /// The project name (also the directory created for it). Prompted when omitted.
+    pub name: Option<String>,
+
+    /// The database backend: `sqlite`, `postgres`, `mysql`, or `none`. Prompted
+    /// when omitted in an interactive session.
+    #[arg(long)]
+    pub db: Option<String>,
 
     /// Scaffold into the current directory instead of creating a new one.
     #[arg(long)]

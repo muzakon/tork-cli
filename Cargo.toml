@@ -1,0 +1,30 @@
+# Tork developer CLI workspace.
+#
+# A standalone workspace, sibling to `framework/` and `orm/`, so the unified `tork`
+# command can grow independently. It path-depends the ORM's migration CLI for
+# `tork migrate ...`; everything else (project scaffolding, cargo wrappers) is
+# self-contained.
+[workspace]
+resolver = "2"
+members = ["crates/tork-cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.96"
+authors = ["muzakon <hasanmuzak@hotmail.com>"]
+license = "MIT"
+repository = "https://github.com/muzakon/tork"
+
+[workspace.dependencies]
+tork-orm-cli = { path = "../orm/crates/tork-orm-cli", default-features = false }
+clap = { version = "4", features = ["derive", "env"] }
+tokio = { version = "1.52", features = ["rt-multi-thread", "macros", "process", "signal", "time", "sync"] }
+notify = "6"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+strip = true

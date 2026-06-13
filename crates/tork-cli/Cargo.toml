@@ -1,0 +1,26 @@
+[package]
+name = "tork-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "The Tork developer CLI: scaffold projects, run migrations, and drive the build/dev loop."
+
+[[bin]]
+name = "tork"
+path = "src/main.rs"
+
+[features]
+default = []
+# Forward a live network driver to the migration engine so `tork migrate ...` can
+# target a postgres:// or mysql:// URL.
+postgres = ["tork-orm-cli/postgres"]
+mysql = ["tork-orm-cli/mysql"]
+
+[dependencies]
+tork-orm-cli = { workspace = true }
+clap = { workspace = true }
+tokio = { workspace = true }
+notify = { workspace = true }

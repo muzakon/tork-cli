@@ -86,7 +86,9 @@ database URL. The matching schema is usually generated from your models; see the
 [ORM migration guide](https://github.com/muzakon/tork-orm/blob/main/docs/08-migrations-and-cli.md).
 
 Global migration flags: `--dir <path>` (migrations directory), `--table <name>`
-(bookkeeping table, default `_tork_migrations`), `-y/--yes` (skip confirmation).
+(bookkeeping table, default `_tork_migrations`), `-y/--yes` (skip confirmation),
+`--allow-checksum-mismatch` (downgrade an edited-applied-migration error to a
+warning; development only — `tork migrate` aborts on checksum drift by default).
 
 ## Build / check / format / dev
 

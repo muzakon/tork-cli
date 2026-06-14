@@ -92,13 +92,16 @@ pub struct NewArgs {
     #[arg(long)]
     pub here: bool,
 
-    /// The git URL for the generated project's framework dependency (`tork`).
-    #[arg(long, default_value = DEFAULT_FRAMEWORK_GIT)]
-    pub framework_git: String,
+    /// Use a git source for the framework dependency (`tork`) instead of the
+    /// published crates.io version. Pass a URL, or omit the value for the default
+    /// repository.
+    #[arg(long, num_args = 0..=1, default_missing_value = DEFAULT_FRAMEWORK_GIT)]
+    pub framework_git: Option<String>,
 
-    /// The git URL for the generated project's ORM dependency (`tork-orm`).
-    #[arg(long, default_value = DEFAULT_ORM_GIT)]
-    pub orm_git: String,
+    /// Use a git source for the ORM dependency (`tork-orm`) instead of crates.io.
+    /// Pass a URL, or omit the value for the default repository.
+    #[arg(long, num_args = 0..=1, default_missing_value = DEFAULT_ORM_GIT)]
+    pub orm_git: Option<String>,
 
     /// Pin the git dependencies to a branch (default: each repo's default branch).
     #[arg(long)]

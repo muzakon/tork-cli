@@ -85,6 +85,28 @@ pub fn orm_dep(git: &str, branch: Option<&str>, db: Database) -> String {
     table
 }
 
+/// The published crates.io version that generated projects depend on (a caret
+/// requirement matching any `0.1.x`).
+pub const CRATES_VERSION: &str = "0.1";
+
+/// The crates.io dependency value for the framework (`tork = "0.1"`).
+pub fn crates_dep(version: &str) -> String {
+    format!("\"{version}\"")
+}
+
+/// The crates.io `tork-orm` dependency table, selecting the backend feature plus
+/// the `tork` integration (the ORM is framework-agnostic by default).
+pub fn orm_crates_dep(version: &str, db: Database) -> String {
+    let backend = match db {
+        Database::Postgres => "postgres",
+        Database::Mysql => "mysql",
+        _ => "sqlite",
+    };
+    format!(
+        "{{ version = \"{version}\", default-features = false, features = [\"{backend}\", \"tork\", \"migrations\"] }}"
+    )
+}
+
 /// The substitutions applied to every template file.
 pub struct Context {
     pub name: String,
@@ -466,5 +488,14 @@ mod tests {
         let table = orm_dep("g", None, Database::Postgres);
         assert!(table.contains("default-features = false"));
         assert!(table.contains("\"postgres\""));
+    }
+
+    #[test]
+    fn crates_io_deps_are_versioned_not_git() {
+        assert_eq!(crates_dep(CRATES_VERSION), "\"0.1\"");
+        let orm = orm_crates_dep(CRATES_VERSION, Database::Sqlite);
+        assert!(orm.contains("version = \"0.1\""));
+        assert!(orm.contains("\"sqlite\"") && orm.contains("\"tork\""));
+        assert!(!orm.contains("git ="));
     }
 }

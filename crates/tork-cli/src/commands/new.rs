@@ -31,10 +31,20 @@ pub fn run(args: &NewArgs, style: &Style) -> Result<(), String> {
         fs::create_dir(&root).map_err(|e| format!("cannot create `{}`: {e}", root.display()))?;
     }
 
+    // Depend on the published crates.io versions by default; use a git source only
+    // when `--framework-git` / `--orm-git` is given (for contributors tracking main).
+    let tork_dep = match &args.framework_git {
+        Some(git) => templates::git_dep(git, args.branch.as_deref()),
+        None => templates::crates_dep(templates::CRATES_VERSION),
+    };
+    let orm_dep = match &args.orm_git {
+        Some(git) => templates::orm_dep(git, args.branch.as_deref(), db),
+        None => templates::orm_crates_dep(templates::CRATES_VERSION, db),
+    };
     let ctx = Context {
         name: name.clone(),
-        tork_dep: templates::git_dep(&args.framework_git, args.branch.as_deref()),
-        orm_dep: templates::orm_dep(&args.orm_git, args.branch.as_deref(), db),
+        tork_dep,
+        orm_dep,
         db,
     };
 

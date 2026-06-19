@@ -23,6 +23,11 @@ fn main() -> ExitCode {
 
     let result = match &cli.command {
         Command::New(args) => commands::new::run(args, &style),
+        // Generate must build the project to read its models, so it drives cargo
+        // rather than the ORM CLI's async DB-only path.
+        Command::Migrate(cli::MigrateCommand::Generate { name }) => {
+            commands::generate::run(name, &cli.global, &style)
+        }
         Command::Migrate(command) => run_migrate(command, &cli.global, &style),
         Command::Build { args } => commands::build::run(args, &style),
         Command::Check { clippy } => commands::check::run(*clippy, &style),

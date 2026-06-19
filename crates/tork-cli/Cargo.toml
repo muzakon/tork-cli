@@ -25,3 +25,5 @@ clap = { workspace = true }
 tokio = { workspace = true }
 notify = { workspace = true }
 dialoguer = { workspace = true }
+# Reading the project's `Cargo.toml` (package name + migrations dir) for `migrate generate`.
+toml = "0.8"
